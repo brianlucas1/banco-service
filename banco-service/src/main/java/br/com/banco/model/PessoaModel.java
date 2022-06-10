@@ -3,30 +3,21 @@ package br.com.banco.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
-import javax.validation.constraints.Email;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
-import org.hibernate.validator.group.GroupSequenceProvider;
-
-import br.com.banco.util.ClienteGroupSequenceProvider;
-import br.com.banco.util.CnpjGoup;
-import br.com.banco.util.CpfGroup;
-import br.com.banco.util.TipoPessoa;
 import lombok.Data;
 
 @Data
 @Entity
-@GroupSequenceProvider(ClienteGroupSequenceProvider.class)
+@Table(name = "TB_PESSOA")
 public class PessoaModel implements Serializable {
 	
 	/**
@@ -36,17 +27,14 @@ public class PessoaModel implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idPessoa;
-	private String nome;
+	private String nome;	
+
+	private String email;	
+
+	private String tipoPessoa;
 	
-	@Email
-	private String email;
-	
-	@Enumerated(EnumType.STRING)
-	private TipoPessoa tipoPessoa;
-	
-	@CPF(groups = CpfGroup.class)
-	@CNPJ(groups = CnpjGoup.class)
-	private String cpf_cnjp;
+	@Column(name = "cpfOrCnpj")
+	private String cpf_cnpj;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro;

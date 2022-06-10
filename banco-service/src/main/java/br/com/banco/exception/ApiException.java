@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.Getter;
 
+//ESSA CLASSE TRATA OS ERROS DO BEAN VALIDATION DO SPRING BOOT
 public class ApiException {
 
 	@Getter

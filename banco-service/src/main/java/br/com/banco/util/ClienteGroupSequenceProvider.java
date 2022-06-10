@@ -5,25 +5,29 @@ import java.util.List;
 
 import org.hibernate.validator.spi.group.DefaultGroupSequenceProvider;
 
+import br.com.banco.dto.PessoaDto;
 import br.com.banco.model.PessoaModel;
 
-public class ClienteGroupSequenceProvider implements DefaultGroupSequenceProvider<PessoaModel> {
+public class ClienteGroupSequenceProvider implements DefaultGroupSequenceProvider<PessoaDto> {
 	
 	@Override
-	public List<Class<?>> getValidationGroups(PessoaModel pess) {
+	public List<Class<?>> getValidationGroups(PessoaDto pess) {
 		
 		List<Class<?>> groups = new ArrayList<>();
-		groups.add(PessoaModel.class);
+		groups.add(PessoaDto.class);
 	
-		if(isPessoaSelecionada(pess)) {
-			groups.add(pess.getTipoPessoa().getGroup());
+		if(pess != null) {
+			
+			if("fisica".equalsIgnoreCase(pess.getTipoPessoa())) {
+				groups.add(PessoaFisica.class);
+			}else if("juridica".equalsIgnoreCase(pess.getTipoPessoa())){
+				groups.add(PessoaJuridica.class);
+			}
+			
 		}
+		
 		
 		return groups;
 	}
 
-	private boolean isPessoaSelecionada(PessoaModel pess) {
-		
-		return pess != null && pess.getTipoPessoa() != null;
-	}
 }
