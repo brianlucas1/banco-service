@@ -1,6 +1,6 @@
 package br.com.banco.exception;
 
-public class PessoaAlreadySaveInDataBase extends Exception {
+public class PessoaAlreadySaveInDataBase extends RuntimeException {
 	
 	/**
 	 *

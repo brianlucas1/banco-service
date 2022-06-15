@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @GroupSequenceProvider(ClienteGroupSequenceProvider.class)
-public class PessoaDto  implements Serializable{
+public class PessoaDTO  implements Serializable{
 	
 
 	/**

@@ -5,16 +5,15 @@ import java.util.List;
 
 import org.hibernate.validator.spi.group.DefaultGroupSequenceProvider;
 
-import br.com.banco.dto.PessoaDto;
-import br.com.banco.model.PessoaModel;
+import br.com.banco.dto.PessoaDTO;
 
-public class ClienteGroupSequenceProvider implements DefaultGroupSequenceProvider<PessoaDto> {
+public class ClienteGroupSequenceProvider implements DefaultGroupSequenceProvider<PessoaDTO> {
 	
 	@Override
-	public List<Class<?>> getValidationGroups(PessoaDto pess) {
+	public List<Class<?>> getValidationGroups(PessoaDTO pess) {
 		
 		List<Class<?>> groups = new ArrayList<>();
-		groups.add(PessoaDto.class);
+		groups.add(PessoaDTO.class);
 	
 		if(pess != null) {
 			
