@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.banco.exception.EmailAlreadyExistsExcpetion;
 import br.com.banco.exception.UserAlreadyExistsExcpetion;
+import br.com.banco.model.EmailModel;
 import br.com.banco.model.UsuarioModel;
 import br.com.banco.repository.UsuarioRepository;
 
@@ -28,10 +29,12 @@ public class UsuarioService {
 		if(!userAlreadyExists) {
 			throw new ResponseStatusException(HttpStatus.OK,"ESSE USUARIO JÁ ESTÁ CADASTRADO NA BASE");
 		}else {
+			
 			UsuarioModel userSave = loginRepo.save(userModel);
 			
 			if(userSave != null) {
 				
+				emailService.sendEmail(userModel);
 			}
 			
 			return userSave;

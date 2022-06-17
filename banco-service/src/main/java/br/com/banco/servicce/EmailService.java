@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.banco.enums.StatusEmail;
 import br.com.banco.model.EmailModel;
+import br.com.banco.model.UsuarioModel;
 import br.com.banco.repository.EmailRepository;
 
 @Service
@@ -25,23 +26,37 @@ public class EmailService {
 	private JavaMailSender emailSender;
 
 	 
-	 public EmailModel sendEmail(EmailModel emailModel) {
-	        emailModel.setSendDateEmail(LocalDateTime.now());
+	 public EmailModel sendEmail(UsuarioModel userModel) {
+		 
+		 EmailModel dadoseMail = setDadosMail(userModel);
+		 
 	        try{
 	            SimpleMailMessage message = new SimpleMailMessage();
-	            message.setFrom(emailModel.getEmailFrom());
-	            message.setTo(emailModel.getEmailTo());
-	            message.setSubject(emailModel.getSubject());
-	            message.setText(emailModel.getText());
+	            message.setFrom(dadoseMail.getEmailFrom());
+	            message.setTo(dadoseMail.getEmailTo());
+	            message.setSubject(dadoseMail.getSubject());
+	            message.setText(dadoseMail.getText());
 	            emailSender.send(message);
 
-	            emailModel.setStatusEmail(StatusEmail.SENT);
+	            dadoseMail.setStatusEmail(StatusEmail.SENT);
 	        } catch (MailException e){
-	            emailModel.setStatusEmail(StatusEmail.ERROR);
+	        	dadoseMail.setStatusEmail(StatusEmail.ERROR);
 	        } finally {
-	            return emailRepository.save(emailModel);
+	            return emailRepository.save(dadoseMail);
 	        }
 	    }
+
+
+	private EmailModel setDadosMail(UsuarioModel userModel) {
+		
+		 EmailModel dadoseMail = new EmailModel();
+		 dadoseMail.setSendDateEmail(LocalDateTime.now());
+		 dadoseMail.setEmailTo(userModel.getEmail());
+		 dadoseMail.setEmailFrom("brianlucas@gmail.com");
+		 dadoseMail.setText("CODIGO CONFIRMAÇÃO");
+		 
+		return dadoseMail;
+	}
 
 	 
 }
